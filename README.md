@@ -22,6 +22,15 @@ Overall, the Serverless Framework provides a streamlined way for developers to b
 <p><em><strong>AWS API Gateway</strong></em>: AWS API Gateway is a fully managed service provided by Amazon Web Services that allows developers to create, deploy, and manage APIs (Application Programming Interfaces) for their web and mobile applications. It provides a scalable, reliable, and secure platform for building APIs that can be used to access data, services, or applications hosted on AWS or on-premises.</p>
 
 <p><em><strong>TypeScript</strong></em>: TypeScript is an open-source programming language developed by Microsoft. It is a superset of JavaScript, which means that any valid JavaScript code is also valid TypeScript code. TypeScript adds optional static typing, class-based object-oriented programming, and other features to JavaScript, making it easier to write and maintain large-scale web applications.<p>
+
+<h2>Prerequisites</h2>
+<ul>
+<li>AWS Admin user</li>
+<li>AWS CLI installed and configured with Admin IAM credentials</li>
+<li>Latest Node.js</li>
+<li>Serverless Framework installed on your machine</li>
+</ul>
+
 </body>
 </head>
 </html>
