@@ -46,15 +46,30 @@ where:
 
 This is how look like for me
 
-<pre>aws s3api create-bucket --bucket juet-bucket --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1
-</pre>
-<pre><img src ="https://user-images.githubusercontent.com/100518568/224864046-38768a9c-8f78-4155-9c17-1ccebbfb1600.png"></pre>
+<pre>aws s3api create-bucket --bucket juet-bucket --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1</pre>
+<img src ="https://user-images.githubusercontent.com/100518568/224864046-38768a9c-8f78-4155-9c17-1ccebbfb1600.png">
 
 To ensure that your bucket exists, run the following commands
 <pre>aws s3 ls</pre>
-<pre><img src ="https://user-images.githubusercontent.com/100518568/224864568-76f3d3fc-b008-4c5a-9772-5c4a7d7f59b9.png"></pre>
+<img src ="https://user-images.githubusercontent.com/100518568/224864568-76f3d3fc-b008-4c5a-9772-5c4a7d7f59b9.png">
 
 NOTE: AWS provide naming standard when naming a bucket. <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-s3-bucket-naming-requirements.html">visit</a>
+  
+  <h2>Step 2. Create TypeScript serverless project from the template</h2>
+  <ol>
+    <li>Change the directory to the one where you would like your new serverless project to be created, for example:</li>
+    <pre> cd ~/Desktop/Projects </pre>
+    <br>
+    <li>To create a new serverless project from <a href="https://github.com/ttarnowski">ttarnowski</a> zero-config TypeScript template run:</li>
+    <pre> serverless create --template-url https://github.com/devpeak/serverless-aws-nodejs-typescript/tree/main --path my-s3-lambda-function </pre>
+    <br>
+    <img src ="https://user-images.githubusercontent.com/100518568/224893958-b574a17a-f2af-4d15-b3a1-8688188b0baa.png"><br>
+    where <em><strong>my-s3-lambda-function</strong></em> is the name of the folder where your project is going to be created.
+    
+  </ol>
+   
+ 
 </body>
 </head>
+
 </html>
