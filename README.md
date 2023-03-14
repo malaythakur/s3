@@ -87,7 +87,84 @@ NOTE: AWS provide naming standard when naming a bucket. <a href="https://docs.aw
   lambdaHashingVersion: 20201221
   region: eu-west-1
   </pre>
-</body>
+  
+  <h2>Functions</h2>
+  
+  In AWS API Gateway, a <em>.yaml</em> file is used to define the configuration of an API in YAML format. The file contains a number of functions that can be used to configure various aspects of the API, including the resources, methods, integrations, and other settings.
+  <br><br>
+  Here are some of the functions commonly used in an AWS API Gateway .yaml file: <br><br>
+  <ul>
+    <li>
+  <strong>Resources</strong>: This function is used to define the top-level resources for the API, such as the /users or /products endpoints. <br><br>
+    </li>
+    <li>
+   <strong>Methods</strong>: This function is used to define the HTTP methods (GET, POST, PUT, DELETE, etc.) that are supported by each resource.</li><br>
+    </li>
+    <li>
+    <strong>Integration</strong>: This function is used to specify how the API Gateway should integrate with other AWS services or external HTTP endpoints.<br><br>
+    </li>
+    <li>
+      <strong>Cors</strong>: This function is used to configure Cross-Origin Resource Sharing (CORS) settings for the API, which allows web pages from other domains                                to make requests to the API.<br><br>
+    </li>
+    <li>
+  <strong>Authorizer</strong>: This function is used to specify an authentication mechanism for the API, such as AWS Lambda authorizers, Cognito User Pools, or                                   custom authentication mechanisms.<br><br>
+    </li>
+    <li>
+  <strong>Deployment</strong>: This function is used to specify the deployment stage for the API, which determines the base URL for the API and the settings for                                    the stage (such as caching and logging).<br><br>
+    </li>
+  </ul>
+
+  we need to modify this section of serverless.yml
+  <pre>
+  functions:
+    hello:
+      handler: src/handlers.hello
+  </pre>
+  
+  Change it to 
+  
+  <pre>
+  functions:
+  getUser:
+    handler: src/handlers.getUser
+    events:
+      - http:
+          path: /user/{uuid}
+          method: get
+  postUser:
+    handler: src/handlers.postUser
+    events:
+      - http:
+          path: /user
+          method: post
+  putUser:
+    handler: src/handlers.putUser
+    events:
+      - http:
+          path: /user/{uuid}
+          method: put
+
+  </pre>
+  
+  Here we've created 3 API Gateway HTTP endpoints:
+  <ol>
+    <li>GET /user/{uuid}</li>
+    <li>PUT /user/{uuid}</li>
+    <li>POST /user</li>
+  </ol><br>
+  In HTTP, GET, PUT, and POST are three commonly used methods for requesting and modifying resources on a web server. Here's a brief overview of each method:
+  <ol>
+    <li>
+      GET: The GET method is used to retrieve a resource from a server. When a client sends a GET request to a server, the server responds with the requested resource (such as a web page or image). GET requests should not modify the server's state, and should only retrieve data.
+    </li>
+    <li>PUT: The PUT method is used to update a resource on a server. When a client sends a PUT request to a server, the server replaces the resource specified in the request with the new data provided by the client.
+    </li>
+    <li>
+      POST: The POST method is used to submit data to a server to create a new resource or update an existing one. When a client sends a POST request to a server, the server processes the data in the request and creates or updates the specified resource
+    </li>
+  </ol><br><br>
+  UUID stands for Universally Unique Identifier. It is a 128-bit value.UUIDs are typically represented as a string of hexadecimal digits, separated by hyphens, such as 550e8400-e29b-41d4-a716-446655440000. It is useful for a variety of applications, such as generating unique IDs for database records or tracking individual sessions in web applications.
+  </body>
 </head>
 
 </html>
