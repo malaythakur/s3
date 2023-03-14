@@ -28,9 +28,33 @@ Overall, the Serverless Framework provides a streamlined way for developers to b
 <li>AWS Admin user</li>
 <li>AWS CLI installed and configured with Admin IAM credentials</li>
 <li>Latest Node.js</li>
+
 <li>Serverless Framework installed on your machine</li>
 </ul>
 
+<h2>Step 1. Creating S3 bucket</h2>
+
+To create an S3 bucket run the following command in your terminal:
+
+<pre>aws s3api create-bucket --bucket bucket-name --region your_region --create-bucket-configuration LocationConstraint=your_region</pre>
+
+where:
+<ul>
+<li><bold>bucket-name</bold> should be replaced with a unique name of the bucket</li>
+<li><bold>your_region</bold> should be replaced with the region of your choice (default one is us-east-1)</li>
+</ul>
+
+This is how look like for me
+
+<pre>aws s3api create-bucket --bucket juet-bucket --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1
+</pre>
+<pre><img src ="https://user-images.githubusercontent.com/100518568/224864046-38768a9c-8f78-4155-9c17-1ccebbfb1600.png"></pre>
+
+To ensure that your bucket exists, run the following commands
+<pre>aws s3 ls</pre>
+<pre><img src ="https://user-images.githubusercontent.com/100518568/224864568-76f3d3fc-b008-4c5a-9772-5c4a7d7f59b9.png"></pre>
+
+NOTE: AWS provide naming standard when naming a bucket. <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-s3-bucket-naming-requirements.html">visit</a>
 </body>
 </head>
 </html>
