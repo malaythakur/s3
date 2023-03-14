@@ -60,15 +60,17 @@ NOTE: AWS provide naming standard when naming a bucket. <a href="https://docs.aw
     <li>Change the directory to the one where you would like your new serverless project to be created, for example:</li>
     <pre> cd ~/Desktop/Projects </pre>
     <br>
-    <li>To create a new serverless project from <a href="https://github.com/ttarnowski">ttarnowski</a> zero-config TypeScript template run:</li>
+    <li>To create a new serverless project from <a href="https://github.com/ttarnowski">ttarnowski</a> zero-config TypeScript template run:
     <pre> serverless create --template-url https://github.com/devpeak/serverless-aws-nodejs-typescript/tree/main --path my-s3-lambda-function </pre>
     <br>
+    </li>
     <img src ="https://user-images.githubusercontent.com/100518568/224893958-b574a17a-f2af-4d15-b3a1-8688188b0baa.png"><br>
-    where <em><strong>my-s3-lambda-function</strong></em> is the name of the folder where your project is going to be created.
-    
+    <p>  where <em><strong>my-s3-lambda-function</strong></em> is the name of the folder where your project is going to be created.</p>
+    <br>
+    <li>Now to install all dependencies for a project</li>
+     <pre> $ yarn install </pre>
+  
   </ol>
-   
- 
 </body>
 </head>
 
