@@ -71,6 +71,22 @@ NOTE: AWS provide naming standard when naming a bucket. <a href="https://docs.aw
      <pre> $ yarn install </pre>
   
   </ol>
+  
+  <h2>Step 3. Infrastructure configuration</h2>
+  <h3>Region</h3>
+  
+  In AWS (Amazon Web Services), a region refers to a physical location around the world where AWS has established a data center or a cluster of data centers.
+  It determines the physical location of a server where your lambda code will be deployed to and executed.
+  
+  <br>
+  To change the region of your lambda find the following section in the serverless.yml file then uncomment the following line and change the value to the region code of your choice:
+  <br>
+  <pre>provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  region: eu-west-1
+  </pre>
 </body>
 </head>
 
