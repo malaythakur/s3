@@ -11,7 +11,9 @@
     "rootDir": "./",
     "strict": true,
     "module": "commonjs",
+    "useUnknownInCatchVariables": false,
     "esModuleInterop": true
+
   },
   "include": [
     "**/*"
