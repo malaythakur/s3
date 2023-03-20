@@ -167,4 +167,42 @@ NOTE: AWS provide naming standard when naming a bucket. <a href="https://docs.aw
   </body>
 </head>
 
+ <h2>Roles</h2>
+ <p>AWS implements a <strong>zero-trust security model</strong>. It means that as a default our lambda functions don't have access to any of AWS resources and therefore it won't be possible to create or modify the files in the S3 bucket without defining explicit access rights.</p>
+ 
+<img src ="https://user-images.githubusercontent.com/100518568/226300888-c85a2dee-087d-489f-9198-cf87b740391f.png">
+
+Let me explain what the above does briefly:
+<ul>
+<li>
+Effect: "Allow" means that we're allowing for access to the certain resource defined below
+</li>
+<li>
+Action is a list of actions we're giving our lambda functions access to
+</li>
+<li>
+Resource - unique address to AWS resource (ARN) - in our case it's an S3 bucket
+</li>
+<li>
+Fn::Join is a serverless.yml specific function to concatenate strings, basically the following code:
+</li>
+</ul>
+<pre>Fn::Join:
+  - ""
+  - - "arn:aws:s3:::"
+     - "malay-s3-bucket"
+     - "/*"
+</pre>
+
+produces:
+<pre>arn:aws:s3:::malay-s3-bucket/*
+</pre>
+
+Here we give access to perform 3 different actions on <strong>malay-s3-bucket</strong> in 2 definition where:
+<ul>
+<li>The first one allows for "GetObject" (read file) and "PutObject" (create/update file) on malay-s3-bucket on any file hence the wildcard symbol (*) in the join.</li>
+
+<li>The second one allows for "ListBucket" (list all the files and directories from the bucket) on malay-s3-bucket - it's required to receive 404 Not Found status when a file does not exist.</li>
+</ul>
+
 </html>
