@@ -36,9 +36,6 @@ provider:
           - - "arn:aws:s3:::"
             - "malay-s3-bucket"
             - "/*"
-
-          #arn:aws:s3:::malay-s3-bucket/*
-
     - Effect: "Allow"
       Action:
         - "s3:ListBucket"
