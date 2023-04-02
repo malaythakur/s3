@@ -3,7 +3,7 @@ import { S3 } from "aws-sdk";
 
 
 const s3 = new S3();
-
+const bucketName = "malay-s3-bucket";
 export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const uuid = event.pathParameters!["uuid"];
 
@@ -16,8 +16,8 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
   }
   try{
-  await s3.headObject({
-    Bucket: "malay-s3-bucket",
+    await s3.headObject({
+    Bucket: "bucketName",
     Key: `${uuid}.json`,
   }).promise();
 
@@ -47,6 +47,8 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     }
 
   }
+
+  
   
 
 
