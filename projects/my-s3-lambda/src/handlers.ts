@@ -13,6 +13,10 @@ class HTTPError extends Error {
   }
 }
 
+interface User extends Object {
+  uuid: string;
+}
+
 export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   
   try{
@@ -73,25 +77,15 @@ const getErrorResult = (e:Error): APIGatewayProxyResult => {
 
 
 
-export const posttUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const postUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
  
   const uuid = v4();
 
   try{
-  const body = {
-     ...JSON.parse(event.body || "{}"),
-     uuid
-  }
-  await s3.putObject({
-    Bucket: bucketName,
-    Key: `${uuid}.json`,
-    Body: JSON.stringify(body),
-  })
-  .promise();
-
+    
   return {
     statusCode: 201,
-    body: JSON.stringify(body),
+    body: JSON.stringify(await upsertUser(uuid, event.body)),
   };
   }
   catch(e) {
@@ -118,11 +112,35 @@ const validateUserExists = async (uuid: string): Promise<void> => {
   }
 };
 
+const upsertUser = async(uuid: string, body: string | null): Promise<User>=>{
+  const user ={
+    ...JSON.parse(body || "{}"),
+    uuid,
+  };
+  
+  await s3
+  .putObject({
+    Bucket: bucketName,
+    Key: `${uuid}.json`,
+    Body: JSON.stringify(user),
+  })
+    .promise();
 
+  return user;
+};
 export const putUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
   try {
     const uuid = getUUID(event);
+
+    await validateUserExists(uuid);
+
+    const user = await upsertUser(uuid, event.body);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(user),
+    };
   }
     catch(e) {
   
