@@ -4,18 +4,20 @@ import { v4 } from "uuid";
 
 const s3 = new S3();
 const bucketName = "malay-s3-bucket";
-export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const uuid = event.pathParameters!["uuid"];
 
-
-  if (!uuid){
-    return {
-      statusCode: 400,
-      body: JSON.stringify({error:"missing UUID"}),
-    };
-
+class HTTPError extends Error {
+  readonly statusCode: number;
+  constructor(message: string, statusCode: number){
+    super(message);
+    this.statusCode= statusCode;
   }
+}
+
+export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  
+
   try{
+    const uuid = getUUID(event);
     await s3.headObject({
     Bucket: "bucketName",
     Key: `${uuid}.json`,
@@ -31,6 +33,15 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       body: (await output).Body?.toString() || "",
     };
   }catch (e) {
+
+    if(e instanceof HTTPError){
+      return {
+        statusCode: e.statusCode,
+        body: JSON.stringify({
+          error: e.message
+        }),
+      };
+    }
     if(e.code === "NotFound" || e.code === "NoSuchKey"){
       
       return{
@@ -47,6 +58,15 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     }
 
   }
+};
+
+const getUUID = (event: APIGatewayProxyEvent) =>{
+  const uuid = event.pathParameters!["uuid"];
+  
+  if(!uuid){
+    throw new HTTPError("missing UUID", 400)
+  }
+  return uuid;
 };
 
 export const posttUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -77,3 +97,8 @@ export const posttUser = async (event: APIGatewayProxyEvent): Promise<APIGateway
     };
   }
 };
+
+export const putUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+
+
+}
