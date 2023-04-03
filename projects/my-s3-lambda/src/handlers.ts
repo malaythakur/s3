@@ -15,9 +15,9 @@ class HTTPError extends Error {
 
 export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   
-
   try{
     const uuid = getUUID(event);
+    await validateUserExists(uuid);
     await s3.headObject({
     Bucket: "bucketName",
     Key: `${uuid}.json`,
@@ -102,12 +102,31 @@ export const posttUser = async (event: APIGatewayProxyEvent): Promise<APIGateway
   }
 };
 
+const validateUserExists = async (uuid: string): Promise<void> => {
+  try {
+  await s3
+  .headObject({
+    Bucket: bucketName,
+    Key: `${uuid}.json`
+  })
+  .promise();
+  } catch(e) {
+    if (e.code === "NotFound" || e.code === "NoSuchKey"){
+      throw new HTTPError("User not found",404)
+    }
+    throw e; 
+  }
+};
+
+
 export const putUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
   try {
     const uuid = getUUID(event);
   }
-  catch(e) {
+    catch(e) {
+  
 
+    return getErrorResult(e);
   }
 };
