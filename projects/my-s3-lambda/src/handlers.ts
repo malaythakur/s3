@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { S3 } from "aws-sdk";
-
+import { v4 } from "uuid";
 
 const s3 = new S3();
 const bucketName = "malay-s3-bucket";
@@ -47,9 +47,33 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     }
 
   }
+};
 
-  
-  
+export const posttUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+ 
+  const uuid = v4();
 
+  try{
+  const body = {
+     ...JSON.parse(event.body || "{}"),
+     uuid
+  }
+  await s3.putObject({
+    Bucket: bucketName,
+    Key: `${uuid}.json`,
+    Body: JSON.stringify(body),
+  })
+  .promise();
 
+  return {
+    statusCode: 201,
+    body: JSON.stringify(body),
+  };
+  }
+  catch(e) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({error: e.message})
+    };
+  }
 };
