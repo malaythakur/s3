@@ -33,15 +33,6 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       body: (await output).Body?.toString() || "",
     };
   }catch (e) {
-
-    if(e instanceof HTTPError){
-      return {
-        statusCode: e.statusCode,
-        body: JSON.stringify({
-          error: e.message
-        }),
-      };
-    }
     if(e.code === "NotFound" || e.code === "NoSuchKey"){
       
       return{
@@ -50,12 +41,7 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       };
     }
 
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        error: e.message
-      }),
-    }
+    return getErrorResult(e);
 
   }
 };
@@ -68,6 +54,24 @@ const getUUID = (event: APIGatewayProxyEvent) =>{
   }
   return uuid;
 };
+
+const getErrorResult = (e:Error): APIGatewayProxyResult => {
+  if (e instanceof HTTPError){
+    return {
+      statusCode: e.statusCode,
+      body: JSON.stringify({
+        errror: e.message
+      }),
+    }
+  }
+
+  return {
+    statusCode: 500,
+    body: JSON.stringify(e),
+  };
+};
+
+
 
 export const posttUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
  
@@ -100,5 +104,10 @@ export const posttUser = async (event: APIGatewayProxyEvent): Promise<APIGateway
 
 export const putUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
+  try {
+    const uuid = getUUID(event);
+  }
+  catch(e) {
 
-}
+  }
+};
